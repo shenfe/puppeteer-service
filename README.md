@@ -40,7 +40,7 @@ action | Function | Do some things, and return some things.
 wish | Any | Any value to compare with the action result, or a function to return a checking result.
 success | DCNode, String | The default node as the next step, if `wish` returns `true`.
 failure | DCNode, String | The default node as the next step, if `wish` returns `false`.
-<other identifier as a node name> | DCNode, String | Declare or reference a node.
+(other identifier as a node name) | DCNode, String | Declare or reference a node.
 
 ### Result Collection Data
 
