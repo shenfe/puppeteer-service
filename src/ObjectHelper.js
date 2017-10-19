@@ -17,10 +17,10 @@ const ObjectParse = str => {
 const ObjectStringify = obj => {
     switch (Object.prototype.toString.call(obj)) {
         case '[object Object]': {
-            var s = '{',
+            let s = '{',
                 p = [];
 
-            for (var i in obj) {
+            for (let i in obj) {
                 if (!obj.hasOwnProperty(i)) continue;
                 if (typeof obj[i] === 'function') {
                     p.push([i, obj[i].toString()]);
