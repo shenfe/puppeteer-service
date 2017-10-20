@@ -1,8 +1,8 @@
-# phantom-service
+# puppeteer-service
 
 (IN DEVELOPMENT...)
 
-Make phantomjs run as a service.
+Make puppeteer run as a service.
 
 ## API
 
@@ -61,13 +61,13 @@ failure | DCNode, String | The default node as the next step, if `wish` returns 
 
 ### Server Side
 
-First, install [PhantomJS](http://phantomjs.org/download.html).
+First, install [puppeteer](https://github.com/GoogleChrome/puppeteer).
 
 Second, install this service via npm:
 
 ```bash
-npm install phantom-service -g
-phantom-service
+npm install puppeteer-service -g
+puppeteer-service
 ```
 
 ### HTTP Client Side
