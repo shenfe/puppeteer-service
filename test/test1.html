@@ -29,10 +29,26 @@
                 },
                 body: `profiles=&url=${encodeURIComponent('https://www.sogou.com/')}&dtd=${encodeURIComponent(JSON.stringify({
                     search: {
+                        type: 'tap',
+                        target: '#stb',
                         data: {
                             query: 'puppeteer'
                         },
-                        action: ({ query }) => {}
+                        prepare: ({ query }) => {
+                            document.querySelector('#query').value = query;
+                        },
+                        timeout: 2000,
+                        resolve: () => [].slice.call(document.querySelectorAll('[name="dttl"]')).map(el => ({ title: el.innerText, link: el.href })),
+                        success: 'clickFirst',
+                        failure: () => 'Something wrong.',
+                        clickFirst: {
+                            type: 'tap',
+                            target: () => document.querySelector('.vrTitle>a'),
+                            resolve: () => ({
+                                title: document.title,
+                                url: location.href
+                            })
+                        }
                     }
                 }))}`
             })
