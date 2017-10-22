@@ -7,6 +7,46 @@
     <title>test</title>
 </head>
 <body>
-    
+    <textarea id="input"></textarea>
+    <textarea id="output"></textarea>
+    <div id="control">
+        <button id="send">send</button>
+    </div>
+    <script>
+        var $ = function (sel = '') {
+            return document.querySelectorAll(sel);
+        };
+        var $input = $('#input')[0];
+        var $output = $('#output')[0];
+        var $send = $('#send')[0];
+        $send.addEventListener('click', function () {
+            fetch('//127.0.0.1:3000/open', {
+                method: 'POST',
+                mode: 'cors',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*'
+                },
+                body: `profiles=&url=${encodeURIComponent('https://www.sogou.com/')}&dtd=${encodeURIComponent(JSON.stringify({
+                    search: {
+                        data: {
+                            query: 'puppeteer'
+                        },
+                        action: ({ query }) => {}
+                    }
+                }))}`
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                }).then(json => {
+                    $output.innerHTML = JSON.stringify(json); 
+                }).catch(error => {
+                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                });
+        });
+    </script>
 </body>
 </html>

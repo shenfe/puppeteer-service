@@ -9,6 +9,7 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.1",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
