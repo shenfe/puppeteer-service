@@ -6,7 +6,7 @@ let browser;
     browser = await puppeteer.launch();
 })();
 
-export const open = async (url, options, dtd) => {
+module.exports.open = async (url, options, dtd) => {
     const page = await browser.newPage();
     await page.goto(url);
 

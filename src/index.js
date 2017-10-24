@@ -8,7 +8,7 @@ const router = new Router();
 const cors = require('@koa/cors');
 
 router.post('/open', function (ctx, next) {
-    // ctx.router available 
+    console.log(ctx.request.body);
 });
 
 app
