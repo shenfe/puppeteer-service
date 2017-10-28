@@ -1,8 +1,8 @@
-export const evaluate = str => {
+const evaluate = str => {
     return (new Function(str))();
 };
 
-export const ObjectParse = str => {
+const ObjectParse = str => {
     if (typeof str !== 'string') return str;
 
     let obj;
@@ -14,7 +14,7 @@ export const ObjectParse = str => {
     return obj;
 };
 
-export const ObjectStringify = obj => {
+const ObjectStringify = obj => {
     switch (Object.prototype.toString.call(obj)) {
     case '[object Object]':
         let s = '{';
@@ -40,4 +40,10 @@ export const ObjectStringify = obj => {
     default:
         return JSON.stringify(obj);
     }
+};
+
+module.exports = {
+    evaluate,
+    ObjectParse,
+    ObjectStringify
 };
