@@ -6,6 +6,11 @@
             "request": "launch",
             "name": "test 163",
             "program": "${workspaceFolder}/test/163/test.js"
+        }, {
+            "type": "node",
+            "request": "launch",
+            "name": "test github",
+            "program": "${workspaceFolder}/test/github/test.js"
         }
     ]
 }
