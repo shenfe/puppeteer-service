@@ -1,13 +1,11 @@
 const puppeteer = require('puppeteer');
 const pupConf = require('../../puppeteer.config');
 
-const accounts = require('./accounts');
-
-let a = accounts[0];
+const account = require('./account-signin');
 
 const runner = require('./signin');
 
 puppeteer.launch(pupConf).then(async browser => {
-    await runner(a, browser);
+    await runner(account, browser);
     await browser.close();
 });

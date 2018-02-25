@@ -9,8 +9,13 @@
         }, {
             "type": "node",
             "request": "launch",
-            "name": "test github",
-            "program": "${workspaceFolder}/test/github/test.js"
+            "name": "test github signin",
+            "program": "${workspaceFolder}/test/github/test-signin.js"
+        }, {
+            "type": "node",
+            "request": "launch",
+            "name": "test github signup",
+            "program": "${workspaceFolder}/test/github/test-signup.js"
         }
     ]
 }
