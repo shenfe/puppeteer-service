@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "debug": "node --inspect ./src/index.js",
+    "test": "http-server ./test -p 3001"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "eslint": "^4.9.0",
@@ -6,10 +10,12 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "http-server": "^0.11.1"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
+    "function-sandbox": "^1.0.3",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",

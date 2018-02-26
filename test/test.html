@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+</head>
+<body>
+    <textarea id="input"></textarea>
+    <div id="output"></div>
+    <div id="control">
+        <button id="send">send</button>
+    </div>
+    <script>
+        const ObjectStringify = obj => {
+            switch (Object.prototype.toString.call(obj)) {
+            case '[object Function]':
+            case '[object AsyncFunction]':
+                return obj.toString();
+            case '[object Object]':
+                let p = [];
+
+                for (let i in obj) {
+                    if (!obj.hasOwnProperty(i)) continue;
+                    p.push([i, ObjectStringify(obj[i])]);
+                }
+
+                return '{' + p.map(v => `${JSON.stringify(v[0])}:${v[1]}`).join(',') + '}';
+
+            case '[object Array]':
+                return '[' + obj.map(ObjectStringify).join(',') + ']';
+
+            default:
+                return JSON.stringify(obj);
+            }
+        };
+    </script>
+    <script>
+        var $ = function (sel = '') {
+            return document.querySelectorAll(sel);
+        };
+        var $input = $('#input')[0];
+        var $output = $('#output')[0];
+        var $send = $('#send')[0];
+        $send.addEventListener('click', function () {
+            fetch('//127.0.0.1:3000/run', {
+                method: 'POST',
+                mode: 'cors',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    data: ObjectStringify({
+                        url: 'https://www.sogou.com/',
+                        run: async page => {
+                            const title = await page.title();
+                            return {
+                                title: title
+                            };
+                        }
+                    })
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Response not ok');
+                }).then(json => {
+                    $output.innerHTML = JSON.stringify(json);
+                }).catch(err => {
+                    console.error('Error in fetch: ', err.message);
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,5 +1,3 @@
-const ppt = require('./api');
-
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
@@ -9,17 +7,17 @@ const cors = require('@koa/cors');
 
 const util = require('./util');
 
-router.post('/open', async function (ctx, next) {
+const run = require('./run');
+
+router.post('/run', async function (ctx, next) {
     ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
     ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
+    console.log('request.body', ctx.request.body);
     console.log('response.header', ctx.response.header);
-    let data = ctx.request.body;
+    let data = util.ObjectParse(ctx.request.body.data);
     console.log('data', data);
-    console.log('dtd', util.ObjectParse(data.dtd));
     ctx.status = 200;
-    ctx.body = ({
-        hello: 'world'
-    });
+    ctx.body = await run(data.url, data.run);
     await next();
 });
 
