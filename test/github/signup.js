@@ -1,4 +1,4 @@
-const { wait } = require('../util');
+const { wait } = require('../../src/util');
 
 const changeUsername = (username, salt) => {
     let s = 'abcdefghijklmnopqrstuvwxyz'[Math.ceil(Math.random() * 10000) % 26];
@@ -17,7 +17,7 @@ const changePassword = (password, salt) => {
 };
 
 const setInput = async (page, selector, value) => {
-    await page.$eval(selector, input => input.value = '');
+    await page.$eval(selector, input => { input.value = '' });
     await page.focus(selector);
     await page.keyboard.type(value);
 };

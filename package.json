@@ -1,9 +1,11 @@
 {
   "scripts": {
+    "start": "node ./src/index.js",
     "debug": "node --inspect ./src/index.js",
-    "test": "http-server ./test -p 3001"
+    "test": "http-server . -p 3001 -o"
   },
   "devDependencies": {
+    "@std/esm": "^0.23.1",
     "babel-core": "^6.26.0",
     "eslint": "^4.9.0",
     "eslint-config-standard": "^10.2.1",
@@ -11,7 +13,8 @@
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "http-server": "^0.11.1"
+    "http-server": "^0.11.1",
+    "open": "0.0.5"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",

@@ -1,4 +1,7 @@
-const { ObjectParse, ObjectStringify } = require('../src/util');
+require = require('@std/esm')(module);
+
+const ObjectParse = require('../src/parse');
+const ObjectStringify = require('../src/stringify.mjs').default;
 
 const obj1 = {};
 
@@ -26,5 +29,5 @@ obj1['c'] = obj4;
 obj1['d'] = obj5;
 
 console.log(ObjectStringify(obj1));
-
-console.log(ObjectParse(ObjectStringify(obj1)));
+const obj6 = ObjectParse(ObjectStringify(obj1));
+console.log(ObjectStringify(obj6));

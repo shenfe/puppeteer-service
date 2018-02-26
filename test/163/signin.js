@@ -1,4 +1,4 @@
-const { wait } = require('../util');
+const { wait } = require('../../src/util');
 
 module.exports = async ({ username, password }, browser) => {
     const page = await browser.newPage();

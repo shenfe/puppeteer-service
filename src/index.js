@@ -5,7 +5,7 @@ const app = new Koa();
 const router = new Router();
 const cors = require('@koa/cors');
 
-const util = require('./util');
+const ObjectParse = require('./parse');
 
 const run = require('./run');
 
@@ -14,7 +14,7 @@ router.post('/run', async function (ctx, next) {
     ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
     console.log('request.body', ctx.request.body);
     console.log('response.header', ctx.response.header);
-    let data = util.ObjectParse(ctx.request.body.data);
+    let data = ObjectParse(ctx.request.body.data);
     console.log('data', data);
     ctx.status = 200;
     ctx.body = await run(data.url, data.run);
