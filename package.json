@@ -24,5 +24,28 @@
     "koa-router": "^7.2.1",
     "koa-session": "^5.5.0",
     "puppeteer": "^1.0.0"
-  }
+  },
+  "name": "puppeteer-service",
+  "description": "(IN DEVELOPMENT...)",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shenfe/puppeteer-service.git"
+  },
+  "keywords": [
+    "puppeteer",
+    "headless-chrome",
+    "service",
+    "web-crawler"
+  ],
+  "author": "hengwu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shenfe/puppeteer-service/issues"
+  },
+  "homepage": "https://github.com/shenfe/puppeteer-service#readme"
 }

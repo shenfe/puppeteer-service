@@ -1,4 +1,4 @@
-const list = require('./accounts.0');
+const list = require('../accounts/list0');
 
 const account = list[0];
 

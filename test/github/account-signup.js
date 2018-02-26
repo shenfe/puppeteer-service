@@ -1,4 +1,4 @@
-const list = require('../163/accounts.0');
+const list = require('../accounts/list0');
 
 const account = list.find(item => !item.github);
 
