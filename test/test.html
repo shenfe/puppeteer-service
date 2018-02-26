@@ -7,8 +7,20 @@
     <title>test</title>
 </head>
 <body>
-    <textarea id="input"></textarea>
-    <div id="output"></div>
+    <div style="display: flex; height: 200px;">
+        <textarea id="input" style="flex: 1; box-sizing: border-box; min-height: 100%; max-height: 100%;">{
+    url: 'https://www.sogou.com/',
+    run: async page => {
+        const title = await page.title();
+        return {
+            title: title
+        };
+    }
+}</textarea>
+        <div style="flex: 1; border: 1px #999 solid; overflow: auto;">
+            <pre id="output"></pre>
+        </div>
+    </div>
     <div id="control">
         <button id="send">send</button>
     </div>
@@ -22,24 +34,11 @@
         var $output = $('#output')[0];
         var $send = $('#send')[0];
         $send.addEventListener('click', function () {
-            Run('//127.0.0.1:3000/run', {
-                url: 'https://www.sogou.com/',
-                run: async page => {
-                    const title = await page.title();
-                    return {
-                        title: title
-                    };
-                }
-            })
-                .then(res => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    throw new Error('Response not ok');
-                }).then(json => {
-                    $output.innerHTML = JSON.stringify(json);
+            Run('//127.0.0.1:3000/run', eval('(' + $input.value + ')'))
+                .then(data => {
+                    $output.innerHTML = JSON.stringify(data, null, 4);
                 }).catch(err => {
-                    console.error('Error in fetch: ', err.message);
+                    console.error('Request error: ', err.message);
                 });
         });
     </script>

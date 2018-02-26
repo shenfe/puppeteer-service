@@ -12,5 +12,8 @@ export default (url, data = {}, options = {}) => {
         body: JSON.stringify({
             data: ObjectStringify(data)
         })
-    })
+    }).then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Response is not ok');
+    });
 };
