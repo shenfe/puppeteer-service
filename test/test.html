@@ -12,9 +12,8 @@
     <div id="control">
         <button id="send">send</button>
     </div>
-    <script type="module" src="../src/stringify.mjs"></script>
     <script type="module">
-        import ObjectStringify from '../src/stringify.mjs';
+        import Run from '../src/request.mjs';
 
         var $ = function (sel = '') {
             return document.querySelectorAll(sel);
@@ -23,28 +22,18 @@
         var $output = $('#output')[0];
         var $send = $('#send')[0];
         $send.addEventListener('click', function () {
-            fetch('//127.0.0.1:3000/run', {
-                method: 'POST',
-                mode: 'cors',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    data: ObjectStringify({
-                        url: 'https://www.sogou.com/',
-                        run: async page => {
-                            const title = await page.title();
-                            return {
-                                title: title
-                            };
-                        }
-                    })
-                })
+            Run('//127.0.0.1:3000/run', {
+                url: 'https://www.sogou.com/',
+                run: async page => {
+                    const title = await page.title();
+                    return {
+                        title: title
+                    };
+                }
             })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
+                .then(res => {
+                    if (res.ok) {
+                        return res.json();
                     }
                     throw new Error('Response not ok');
                 }).then(json => {
