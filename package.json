@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "node ./src/index.js",
-    "debug": "node --inspect ./src/index.js",
+    "start": "node ./src/start.js",
+    "debug": "node --inspect ./src/start.js",
     "test": "http-server . -p 3001 -o"
   },
   "devDependencies": {

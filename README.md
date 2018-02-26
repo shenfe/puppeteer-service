@@ -4,12 +4,21 @@
 
 Make puppeteer run as a service.
 
+## Installation
+
+```bash
+$ npm install --save puppeteer-service
+```
+
 ## Usage
 
 ### server
 
-```bash
-npm start
+```js
+const PuppeteerService = require('puppeteer-service');
+const app = PuppeteerService({
+    port: 3000
+});
 ```
 
 ### client
@@ -30,6 +39,12 @@ Run('//127.0.0.1:3000/run', {
     }).catch(error => {
         /**/
     });
+```
+
+## Development
+
+```bash
+$ npm test # Test
 ```
 
 ## License

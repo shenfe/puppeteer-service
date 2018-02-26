@@ -1,34 +1,38 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-const app = new Koa();
-const router = new Router();
 const cors = require('@koa/cors');
 
 const ObjectParse = require('./parse');
-
 const run = require('./run');
 
-router.post('/run', async function (ctx, next) {
-    ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
-    ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
-    console.log('request.body', ctx.request.body);
-    console.log('response.header', ctx.response.header);
-    let data = ObjectParse(ctx.request.body.data);
-    console.log('data', data);
-    ctx.status = 200;
-    ctx.body = await run(data.url, data.run);
-    await next();
-});
+module.exports = function (options = {}) {
+    const app = new Koa();
+    const router = new Router();
 
-app
-    .use(cors({
-        // origin: '*',
-        credentials: true
-    }))
-    .use(bodyParser())
-    .use(router.routes())
-    .use(router.allowedMethods())
-;
+    router.post('/run', async function (ctx, next) {
+        ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
+        ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
+        console.log('request.body', ctx.request.body);
+        console.log('response.header', ctx.response.header);
+        let data = ObjectParse(ctx.request.body.data);
+        console.log('data', data);
+        ctx.status = 200;
+        ctx.body = await run(data.url, data.run);
+        await next();
+    });
 
-app.listen(3000);
+    app
+        .use(cors({
+            // origin: '*',
+            credentials: true
+        }))
+        .use(bodyParser())
+        .use(router.routes())
+        .use(router.allowedMethods())
+    ;
+
+    app.listen(options.port || 3000);
+
+    return app;
+};
