@@ -1,11 +1,13 @@
 const puppeteer = require('puppeteer');
 
-const config = require('../puppeteer.config');
+const { launch } = require('./config');
 
 let browser;
 
 (async () => {
-    browser = await puppeteer.launch(config);
+    browser = await puppeteer.launch({
+        ...launch
+    });
 })();
 
 module.exports = async (url, fn) => {

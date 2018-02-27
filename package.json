@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "@std/esm": "^0.23.1",
+    "Base64": "^1.0.1",
     "babel-core": "^6.26.0",
     "eslint": "^4.9.0",
     "eslint-config-standard": "^10.2.1",
@@ -18,16 +19,17 @@
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
-    "function-sandbox": "^1.0.3",
+    "function-sandbox": "^1.1.2",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
     "koa-session": "^5.5.0",
+    "node-fetch": "^2.0.0",
     "puppeteer": "^1.0.0"
   },
   "name": "puppeteer-service",
   "description": "(IN DEVELOPMENT...)",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "src/index.js",
   "directories": {
     "test": "test"

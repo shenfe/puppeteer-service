@@ -17,21 +17,32 @@ $ npm install --save puppeteer-service
 ```js
 const PuppeteerService = require('puppeteer-service');
 const app = PuppeteerService({
-    port: 3000
+    port: 3000,
+    api: 'run'
 });
 ```
 
 ### client
 
+> Both the browser and Node.js are applicable.
+
 ```js
 const Run = require('puppeteer-service/request.mjs');
-Run('//127.0.0.1:3000/run', {
+Run('http://your-server.com:3000/run', {
     url: 'https://www.sogou.com',
     run: async page => {
         const title = await page.title();
         return {
-            title: title
+            info: b(a, title)
         };
+    },
+    options: {
+        injection: {
+            a: 'Welcome to ',
+            b: function (x, y) {
+                return x + y;
+            }
+        }
     }
 })
     .then(data => {
@@ -44,6 +55,7 @@ Run('//127.0.0.1:3000/run', {
 ## Development
 
 ```bash
+$ npm run debug # Debug
 $ npm test # Test
 ```
 

@@ -12,11 +12,11 @@ const ObjectParse = str => {
         console.error(e);
     }
 
-    walk(obj, (target, p, v) => {
-        if (typeof v === 'function') {
-            target[p] = fnsb(v, true);
-        }
-    });
+    // walk(obj, (target, p, v) => {
+    //     if (typeof v === 'function') {
+    //         target[p] = fnsb(v, true);
+    //     }
+    // });
 
     return obj;
 };

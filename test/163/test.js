@@ -1,11 +1,26 @@
-const puppeteer = require('puppeteer');
-const pupConf = require('../../puppeteer.config');
+require = require('@std/esm')(module, {
+    cjs: true
+});
+
+const Run = require('../../src/request.mjs').default;
 
 const account = require('./account');
 
 const runner = require('./signin');
 
-puppeteer.launch(pupConf).then(async browser => {
-    await runner(account, browser);
-    await browser.close();
-});
+const { wait } = require('../../src/util');
+
+const serverConf = require('../../src/config').server;
+
+Run(`http://127.0.0.1:${serverConf.port}/${serverConf.apiName}`, {
+    url: 'https://mail.163.com/',
+    run: runner,
+    options: {
+        injection: {
+            wait,
+            ...account
+        }
+    }
+})
+    .then(data => console.log(JSON.stringify(data)))
+    .catch(err => console.error(err));

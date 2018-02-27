@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const pupConf = require('../../puppeteer.config');
+const pupConf = require('../../src/config').launch;
 
 const account = require('./account-signin');
 

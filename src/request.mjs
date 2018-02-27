@@ -1,5 +1,13 @@
 import ObjectStringify from '../src/stringify.mjs';
 
+const detectNodejs = (function () {
+    return Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]';
+})();
+
+if (detectNodejs) {
+    global.fetch = require('node-fetch');
+}
+
 export default (url, data = {}, options = {}) => {
     return fetch(url, {
         method: 'POST',

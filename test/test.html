@@ -26,6 +26,7 @@
     </div>
     <script type="module">
         import Run from '../src/request.mjs';
+        import ServerConf from '../src/config/server.mjs';
 
         var $ = function (sel = '') {
             return document.querySelectorAll(sel);
@@ -34,7 +35,7 @@
         var $output = $('#output')[0];
         var $send = $('#send')[0];
         $send.addEventListener('click', function () {
-            Run('//127.0.0.1:3000/run', eval('(' + $input.value + ')'))
+            Run(`//127.0.0.1:${ServerConf.port}/${ServerConf.apiName}`, eval('(' + $input.value + ')'))
                 .then(data => {
                     $output.innerHTML = JSON.stringify(data, null, 4);
                 }).catch(err => {

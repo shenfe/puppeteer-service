@@ -49,7 +49,7 @@ module.exports = async ({ username, password, email }, browser) => {
         usernameSalt = usernameUpdate.salt;
         username = usernameUpdate.username(originUsername, usernameSalt);
         console.log('change username to: ', username);
-        
+
         let passwordUpdate = changePassword(originPassword, passwordSalt);
         passwordSalt = passwordUpdate.salt;
         password = passwordUpdate.password(originPassword, passwordSalt);

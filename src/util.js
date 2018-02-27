@@ -1,5 +1,7 @@
+const fnsb = require('function-sandbox');
+
 const evaluate = str => {
-    return (new Function(`return ${str}`))();
+    return fnsb(new Function(`return (${str})`), true)();
 };
 
 const walk = (obj, fn) => {
@@ -19,7 +21,9 @@ const walk = (obj, fn) => {
     }
 };
 
-const wait = d => new Promise(resolve => setTimeout(_ => resolve(1), d));
+const wait = d => {
+    return new Promise(resolve => setTimeout(_ => resolve(1), d));
+};
 
 module.exports = {
     evaluate,

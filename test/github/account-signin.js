@@ -1,5 +1,1 @@
-const list = require('../accounts/list0');
-
-module.exports = {
-    ...list[0].github
-};
+module.exports = require('../accounts').accountToSigninGithub();
