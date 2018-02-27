@@ -1,4 +1,4 @@
-# puppeteer-service
+# puppeteer-service <a href="https://www.npmjs.com/package/puppeteer-service"><img src="https://img.shields.io/npm/v/puppeteer-service.svg"></a>
 
 <img src="https://user-images.githubusercontent.com/10379601/29446482-04f7036a-841f-11e7-9872-91d1fc2ea683.png" height="200" align="right">
 
@@ -7,7 +7,7 @@ Run [GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) as a ser
 ## Installation
 
 ```bash
-$ npm install --save puppeteer-service
+$ npm install puppeteer-service --save
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ const app = PuppeteerService({
 
 ### client
 
-Use the sub-module named `request` to communicate with the server. It's runnable at both browser and Node.js.
+Use the sub-module named `request` to communicate with the server. It's runnable at **both browser and Node.js**.
 
 ```js
 const Run = require('puppeteer-service/request.mjs');
@@ -60,7 +60,7 @@ Run('http://your-server.com:3000/run', {
     });
 ```
 
-Or send an HTTP request directly, as the following does:
+Or **send an HTTP request directly**, as the following does:
 
 ```js
 fetch('http://your-server.com:3000/run', {
