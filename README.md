@@ -24,19 +24,27 @@ const app = PuppeteerService({
 
 ### client
 
-> Both the browser and Node.js are applicable.
+Use the sub-module named `request` to communicate with the server. It's runnable at both browser and Node.js.
 
 ```js
 const Run = require('puppeteer-service/request.mjs');
 Run('http://your-server.com:3000/run', {
+    /* Entry page url */
     url: 'https://www.sogou.com',
+
+    /* Runner function */
     run: async page => {
         const title = await page.title();
         return {
             info: b(a, title)
         };
     },
+
+    /* Options */
     options: {
+        /* Variables to inject */
+        /* Identifiers and their corresponding literal values will be injected 
+            as variable declarations into the runner function. */
         injection: {
             a: 'Welcome to ',
             b: function (x, y) {
@@ -45,6 +53,46 @@ Run('http://your-server.com:3000/run', {
         }
     }
 })
+    .then(data => {
+        /**/
+    }).catch(error => {
+        /**/
+    });
+```
+
+Or send an HTTP request directly, as the following does:
+
+```js
+fetch('http://your-server.com:3000/run', {
+    method: 'POST',
+    /*...*/
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        data: `{
+            url: 'https://www.sogou.com',
+            run: async page => {
+                const title = await page.title();
+                return {
+                    info: b(a, title)
+                };
+            },
+            options: {
+                injection: {
+                    a: 'Welcome to ',
+                    b: function (x, y) {
+                        return x + y;
+                    }
+                }
+            }
+        }`
+    })
+})
+    .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Response is not ok');
+    })
     .then(data => {
         /**/
     }).catch(error => {
