@@ -109,4 +109,6 @@ $ npm test # Test
 
 ## License
 
-MIT
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright © 2018-present, [shenfe](https://github.com/shenfe)
