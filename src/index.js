@@ -18,12 +18,8 @@ const path = require('path');
 const gracefulShutdown = require('http-graceful-shutdown');
 
 module.exports = async function (options = {}) {
-    if (typeof options.port === 'number') {
-        config.server.port = options.port;
-    }
-    if (typeof options.api === 'string') {
-        config.server.apiName = options.api;
-    }
+    const port = options.port || config.server.port;
+    const apiName = options.api || config.server.apiName;
 
     await Ppt.open(options.puppeteer);
     console.log('Chrome puppeteer open');
@@ -44,7 +40,7 @@ module.exports = async function (options = {}) {
         });
     }
 
-    router.post(`/${config.server.apiName}`, async function (ctx, next) {
+    router.post(`/${apiName}`, async function (ctx, next) {
         ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
         ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
         // console.log('request.body', ctx.request.body);
@@ -104,8 +100,8 @@ module.exports = async function (options = {}) {
         .use(router.allowedMethods())
     ;
 
-    const server = app.listen(config.server.port);
-    console.log('Listening port ' + config.server.port);
+    const server = app.listen(+port);
+    console.log('Listening port ' + port);
     gracefulShutdown(server, {
         onShutdown: () => {
             console.log('Closing...');
