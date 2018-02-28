@@ -3,6 +3,8 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
 
+const { createReadStream } = require('fs');
+
 const fnsb = require('function-sandbox');
 
 const ObjectParse = require('./parse');
@@ -26,6 +28,19 @@ module.exports = async function (options = {}) {
 
     const app = new Koa();
     const router = new Router();
+
+    serve_static_files: {
+        router.get('/test/', (ctx, next) => {
+            ctx.type = 'html';
+            ctx.body = createReadStream('./test/index.html');
+        });
+        ['/src/request.mjs', '/src/stringify.mjs', '/src/config/server.mjs'].forEach(p => {
+            router.get(p, (ctx, next) => {
+                ctx.type = 'application/javascript';
+                ctx.body = createReadStream(`.${p}`);
+            });
+        });
+    }
 
     router.post(`/${config.server.apiName}`, async function (ctx, next) {
         ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
