@@ -12,7 +12,7 @@ $ npm install puppeteer-service --save
 
 ## Usage
 
-### server
+### Server
 
 ```js
 const PuppeteerService = require('puppeteer-service');
@@ -25,9 +25,11 @@ const { koaApp, server } = PuppeteerService({
 });
 ```
 
-### client
+### Client
 
-Use the sub-module named `request` to communicate with the server. It's runnable at **both browser and Node.js**.
+#### Option 1: Use the Submodule
+
+Use the submodule named `request` to communicate with the server. It's runnable at **both browser and Node.js**.
 
 ```js
 const Run = require('puppeteer-service/request.mjs');
@@ -63,7 +65,11 @@ Run('http://your-server.com:3000/run', {
     });
 ```
 
-Or **send an HTTP request directly**, as the following does:
+By the way, if you want to use ES modules (such as `puppeteer-service/request.mjs`) in Node.js, maybe [@std/esm](https://www.npmjs.com/package/@std/esm) is a good choice.
+
+#### Option 2: Send an HTTP Request Directly
+
+As the following does:
 
 ```js
 fetch('http://your-server.com:3000/run', {
