@@ -36,7 +36,7 @@ const run = async (url, fn) => {
         console.error(e);
         result = {};
     }
-    await page.close();
+    page.close();
     return result;
 };
 

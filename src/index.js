@@ -46,7 +46,7 @@ module.exports = async function (options = {}) {
         });
     }
 
-    router.post(`/${apiName}`, async function (ctx, next) {
+    router.post(`/${apiName}`, async function (ctx) {
         ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
         ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
         // console.log('request.body', ctx.request.body);
@@ -58,7 +58,6 @@ module.exports = async function (options = {}) {
             ...data.options,
             asFunction: true
         }));
-        await next();
     });
 
     router.post(`/puppeteer`, async function (ctx, next) {
