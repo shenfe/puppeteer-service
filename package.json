@@ -2,8 +2,7 @@
   "scripts": {
     "start": "node ./scripts/start.js",
     "stop": "node ./scripts/stop.js",
-    "debug": "node --inspect ./scripts/start.js",
-    "test": "http-server . -p 3001 -o"
+    "debug": "node --inspect ./scripts/start.js"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
@@ -16,20 +15,22 @@
     "node-fetch": "^2.0.0",
     "puppeteer": "^1.0.0",
     "@std/esm": "^0.23.1",
-    "Base64": "^1.0.1",
+    "Base64": "^1.0.1"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "open": "0.0.5",
     "babel-core": "^6.26.0",
     "eslint": "^4.9.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "http-server": "^0.11.1",
-    "open": "0.0.5"
+    "eslint-plugin-standard": "^3.0.1"
   },
   "name": "puppeteer-service",
   "description": "Run headless Chrome (aka Puppeteer) as a service, for web crawling, remote controlling and so on.",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "main": "src/index.js",
   "directories": {
     "test": "test"

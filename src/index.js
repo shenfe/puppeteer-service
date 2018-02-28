@@ -34,7 +34,7 @@ module.exports = async function (options = {}) {
     serve_static_files: {
         router.get('/test/', (ctx, next) => {
             ctx.type = 'html';
-            ctx.body = createReadStream(path.resolve(__dirname, '../test/index.html'));
+            ctx.body = createReadStream(path.resolve(__dirname, '../src/index.html'));
         });
         ['/src/request.mjs', '/src/stringify.mjs', '/src/config/server.mjs'].forEach(p => {
             router.get(p, (ctx, next) => {
