@@ -10,9 +10,9 @@ const runner = require('./signin');
 
 const { wait } = require('../../src/util');
 
-const serverConf = require('../../src/config').server;
+const { port, apiName } = require('../../src/config').server;
 
-Run(`http://127.0.0.1:${serverConf.port}/${serverConf.apiName}`, {
+Run(`http://127.0.0.1:${port}/${apiName}`, {
     url: 'https://mail.163.com/',
     run: runner,
     options: {
