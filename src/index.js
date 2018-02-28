@@ -21,7 +21,7 @@ module.exports = async function (options = {}) {
         config.server.apiName = options.api;
     }
 
-    await Ppt.open();
+    await Ppt.open(options.puppeteer);
 
     const app = new Koa();
     const router = new Router();
@@ -44,10 +44,10 @@ module.exports = async function (options = {}) {
     router.post(`/puppeteer`, async function (ctx, next) {
         ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
         ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
-        let { key, cmd } = ctx.request.body;
+        let { key, cmd, opt } = ctx.request.body;
         ctx.status = 200;
         if (key === privates.key) {
-            let re = await Ppt[cmd]();
+            let re = await Ppt[cmd](opt);
             ctx.body = {
                 code: re === 0 ? 0 : 1,
                 message: re === 0 ? 'success' : 'failure'

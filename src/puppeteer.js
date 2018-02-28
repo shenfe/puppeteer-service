@@ -5,10 +5,11 @@ const { launch } = require('./config');
 let browser;
 let status = 0;
 
-const open = async () => {
+const open = async (options = {}) => {
     if (status === 1) return 0;
     browser = await puppeteer.launch({
-        ...launch
+        ...launch,
+        ...options
     });
     status = 1;
     return 0;

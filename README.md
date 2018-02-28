@@ -17,8 +17,11 @@ $ npm install puppeteer-service --save
 ```js
 const PuppeteerService = require('puppeteer-service');
 const { koaApp, server } = PuppeteerService({
-    port: 3000,
-    api: 'run'
+    port: 3000, // default
+    api: 'run', // default
+    puppeteer: {
+        // See https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions
+    }
 });
 ```
 
