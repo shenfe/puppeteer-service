@@ -16,7 +16,7 @@ $ npm install puppeteer-service --save
 
 ```js
 const PuppeteerService = require('puppeteer-service');
-const app = PuppeteerService({
+const { koaApp, server } = PuppeteerService({
     port: 3000,
     api: 'run'
 });

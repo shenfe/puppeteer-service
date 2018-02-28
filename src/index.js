@@ -6,9 +6,11 @@ const cors = require('@koa/cors');
 const fnsb = require('function-sandbox');
 
 const ObjectParse = require('./parse');
-const run = require('./run');
+const Ppt = require('./puppeteer');
 
 const config = require('./config');
+
+const gracefulShutdown = require('http-graceful-shutdown');
 
 module.exports = function (options = {}) {
     if (typeof options.port === 'number') {
@@ -29,7 +31,7 @@ module.exports = function (options = {}) {
         let data = ObjectParse(ctx.request.body.data);
         console.log('data', data);
         ctx.status = 200;
-        ctx.body = await run(data.url, fnsb(data.run, {
+        ctx.body = await Ppt.run(data.url, fnsb(data.run, {
             ...data.options,
             asFunction: true
         }));
@@ -46,7 +48,16 @@ module.exports = function (options = {}) {
         .use(router.allowedMethods())
     ;
 
-    app.listen(config.server.port);
+    const server = app.listen(config.server.port);
+    gracefulShutdown(server, {
+        onShutdown: () => {
+            console.log('Closing...');
+            return Ppt.close();
+        }
+    });
 
-    return app;
+    return {
+        koaApp: app,
+        server
+    };
 };

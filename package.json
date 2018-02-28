@@ -20,6 +20,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.1",
     "function-sandbox": "^1.1.2",
+    "http-graceful-shutdown": "^2.1.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
@@ -29,7 +30,7 @@
   },
   "name": "puppeteer-service",
   "description": "(IN DEVELOPMENT...)",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "src/index.js",
   "directories": {
     "test": "test"
