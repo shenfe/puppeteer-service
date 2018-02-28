@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const config = require('../src/config');
-const keyString = require('../src/config/private').key;
+const keyString = require('../src/config/privates').key;
 
 let port;
 

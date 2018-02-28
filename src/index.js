@@ -11,13 +11,14 @@ const ObjectParse = require('./parse');
 const Ppt = require('./puppeteer');
 
 const config = require('./config');
-const privates = require('./config/private');
+const privates = require('./config/privates');
 
 const path = require('path');
 
 const gracefulShutdown = require('http-graceful-shutdown');
 
 module.exports = async function (options = {}) {
+    const test = !!options.test;
     const port = options.port || config.server.port;
     const apiName = options.api || config.server.apiName;
 
@@ -27,7 +28,8 @@ module.exports = async function (options = {}) {
     const app = new Koa();
     const router = new Router();
 
-    serve_static_files_for_the_test_page: {
+    /* Serve static files for the test page */
+    if (test) {
         router.get('/test/', (ctx, next) => {
             ctx.type = 'html';
             ctx.body = createReadStream(path.resolve(__dirname, '../src/index.html'));
@@ -88,8 +90,8 @@ module.exports = async function (options = {}) {
         ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
         ctx.status = 200;
         ctx.body = {
-            code: 0,
-            message: ''
+            code: -1,
+            message: 'error'
         };
         await next();
     });

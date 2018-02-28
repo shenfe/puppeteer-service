@@ -27,16 +27,17 @@ const close = () => {
 };
 
 const run = async (url, fn) => {
+    let page, result;
     try {
-        const page = await browser.newPage();
+        page = await browser.newPage();
         await page.goto(url);
-        const result = await fn(page);
-        await page.close();
-        return result;
+        result = await fn(page);
     } catch (e) {
         console.error(e);
-        return {};
+        result = {};
     }
+    await page.close();
+    return result;
 };
 
 module.exports = {

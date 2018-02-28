@@ -10,7 +10,7 @@ Run [GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) as a ser
 $ npm install puppeteer-service --save
 ```
 
-## Usage
+## Basic Usage
 
 ### Server
 
@@ -19,11 +19,14 @@ const PuppeteerService = require('puppeteer-service');
 const { koaApp, server } = PuppeteerService({
     port: 3000, // default
     api: 'run', // default
+    test: true, // default: false
     puppeteer: {
         // See https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions
     }
 });
 ```
+
+If the `test` option is set `true` like above, you can visit the test page via `http://your.host:3000/run`.
 
 ### Client
 
@@ -33,7 +36,7 @@ Use the submodule named `request` to communicate with the server. It's runnable 
 
 ```js
 const Run = require('puppeteer-service/request.mjs');
-Run('http://your-server.com:3000/run', {
+Run('http://your.host:3000/run', {
     /* Entry page url */
     url: 'https://www.sogou.com',
 
@@ -65,14 +68,14 @@ Run('http://your-server.com:3000/run', {
     });
 ```
 
-By the way, if you want to use ES modules (such as `puppeteer-service/request.mjs`) in Node.js, maybe [@std/esm](https://www.npmjs.com/package/@std/esm) is a good choice.
+By the way, if you want to use ES modules (such as `puppeteer-service/request.mjs`) in Node.js, [@std/esm](https://www.npmjs.com/package/@std/esm) maybe a good choice.
 
 #### Option 2: Send an HTTP Request Directly
 
 As the following does:
 
 ```js
-fetch('http://your-server.com:3000/run', {
+fetch('http://your.host:3000/run', {
     method: 'POST',
     /*...*/
     headers: {
@@ -111,10 +114,19 @@ fetch('http://your-server.com:3000/run', {
 
 ## Development
 
+Some commands:
+
 ```bash
-$ npm start # Start
-$ npm run debug # Start in debugging mode
-$ npm stop # Stop
+# Start
+npm start
+npm start -- -p 3000 # specifying port 3000
+node ./scripts/start.js -p 3000 # the same with above
+npm run debug # debugging mode
+
+# Stop
+npm stop
+npm stop -- -p 3000 # specifying port 3000
+node ./scripts/stop.js -p 3000 # the same with above
 ```
 
 ## License
