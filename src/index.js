@@ -27,12 +27,16 @@ module.exports = async function (options = {}) {
     const app = new Koa();
     const router = new Router();
 
-    serve_static_files: {
+    serve_static_files_for_the_test_page: {
         router.get('/test/', (ctx, next) => {
             ctx.type = 'html';
             ctx.body = createReadStream(path.resolve(__dirname, '../src/index.html'));
         });
-        ['/src/request.mjs', '/src/stringify.mjs', '/src/config/server.mjs'].forEach(p => {
+        router.get('/src/config/server.mjs', ctx => {
+            ctx.type = 'application/javascript';
+            ctx.body = `export default { port: ${port}, apiName: '${apiName}' }`;
+        });
+        ['/src/request.mjs', '/src/stringify.mjs'].forEach(p => {
             router.get(p, (ctx, next) => {
                 ctx.type = 'application/javascript';
                 ctx.body = createReadStream(path.resolve(__dirname, `..${p}`));
