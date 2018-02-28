@@ -13,6 +13,8 @@ const Ppt = require('./puppeteer');
 const config = require('./config');
 const privates = require('./config/private');
 
+const path = require('path');
+
 const gracefulShutdown = require('http-graceful-shutdown');
 
 module.exports = async function (options = {}) {
@@ -32,12 +34,12 @@ module.exports = async function (options = {}) {
     serve_static_files: {
         router.get('/test/', (ctx, next) => {
             ctx.type = 'html';
-            ctx.body = createReadStream('./test/index.html');
+            ctx.body = createReadStream(path.resolve(__dirname, '../test/index.html'));
         });
         ['/src/request.mjs', '/src/stringify.mjs', '/src/config/server.mjs'].forEach(p => {
             router.get(p, (ctx, next) => {
                 ctx.type = 'application/javascript';
-                ctx.body = createReadStream(`.${p}`);
+                ctx.body = createReadStream(path.resolve(__dirname, `..${p}`));
             });
         });
     }

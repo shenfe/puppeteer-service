@@ -29,7 +29,7 @@
   },
   "name": "puppeteer-service",
   "description": "Run headless Chrome (aka Puppeteer) as a service, for web crawling, remote controlling and so on.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "src/index.js",
   "directories": {
     "test": "test"
