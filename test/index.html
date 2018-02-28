@@ -22,7 +22,7 @@
         </div>
     </div>
     <div id="control">
-        <button id="send">send</button>
+        <button id="send">send</button><input id="api" type="text" value="">
     </div>
     <script type="module">
         import Run from '../src/request.mjs';
@@ -34,8 +34,10 @@
         var $input = $('#input')[0];
         var $output = $('#output')[0];
         var $send = $('#send')[0];
+        var $api = $('#api')[0];
+        $api.value = `//127.0.0.1:${ServerConf.port}/${ServerConf.apiName}`;
         $send.addEventListener('click', function () {
-            Run(`//127.0.0.1:${ServerConf.port}/${ServerConf.apiName}`, eval('(' + $input.value + ')'))
+            Run($api.value, eval('(' + $input.value + ')'))
                 .then(data => {
                     $output.innerHTML = JSON.stringify(data, null, 4);
                 }).catch(err => {
