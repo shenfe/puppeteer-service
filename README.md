@@ -26,7 +26,7 @@ const { koaApp, server } = PuppeteerService({
 });
 ```
 
-If the `test` option is set `true` like above, you can visit the test page via `http://your.host:3000/run`.
+If the `test` option is set `true` like above, you can visit the test page via `http://your.host:3000/test/`.
 
 ### Client
 
