@@ -22,6 +22,7 @@ module.exports = async function (options = {}) {
     }
 
     await Ppt.open(options.puppeteer);
+    console.log('Chrome puppeteer open');
 
     const app = new Koa();
     const router = new Router();
@@ -87,6 +88,7 @@ module.exports = async function (options = {}) {
     ;
 
     const server = app.listen(config.server.port);
+    console.log('Listening port ' + config.server.port);
     gracefulShutdown(server, {
         onShutdown: () => {
             console.log('Closing...');
