@@ -103,8 +103,10 @@ fetch('http://your-server.com:3000/run', {
 ## Development
 
 ```bash
-$ npm run debug # Debug
-$ npm test # Test
+$ npm start # Start
+$ npm stop # Stop
+$ npm run debug # Start in debugging mode
+$ npm test # Launch an HTTP server locally, then you can visit `/test/` to test your own cases there.
 ```
 
 ## License

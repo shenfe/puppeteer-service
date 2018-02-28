@@ -3,17 +3,23 @@ const puppeteer = require('puppeteer');
 const { launch } = require('./config');
 
 let browser;
+let status = 0;
 
-(async () => {
+const open = async () => {
+    if (status === 1) return 0;
     browser = await puppeteer.launch({
         ...launch
     });
-})();
+    status = 1;
+    return 0;
+};
 
 const close = () => {
     return browser.close().then(_ => {
         console.log('Chromium and all of its pages have been closed.');
         browser = null;
+        status = 0;
+        return 0;
     }).catch(e => {
         console.error(e);
     });
@@ -33,6 +39,7 @@ const run = async (url, fn) => {
 };
 
 module.exports = {
-    run,
-    close
+    open,
+    close,
+    run
 };

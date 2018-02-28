@@ -1,4 +1,4 @@
 export default {
-    "port": 3000,
-    "apiName": "run"
+    port: 3000,
+    apiName: 'run'
 }
