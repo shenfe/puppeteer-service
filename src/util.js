@@ -1,7 +1,14 @@
+const vm = require('vm');
+
 const fnsb = require('function-sandbox');
 
 const evaluate = str => {
-    return fnsb(new Function(`return (${str})`), true)();
+    const safeFn = fnsb(new Function(`return (${str})`));
+    const returnVarName = 'result';
+    const script = new vm.Script(`${returnVarName} = (${safeFn})()`);
+    const sandbox = {};
+    script.runInNewContext(sandbox);
+    return sandbox[returnVarName];
 };
 
 const walk = (obj, fn) => {

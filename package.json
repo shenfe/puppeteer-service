@@ -6,16 +6,17 @@
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
+    "@std/esm": "^0.23.1",
+    "Base64": "^1.0.1",
     "function-sandbox": "^1.1.2",
     "http-graceful-shutdown": "^2.1.0",
+    "ip": "^1.1.5",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
     "koa-session": "^5.5.0",
     "node-fetch": "^2.0.0",
-    "puppeteer": "^1.0.0",
-    "@std/esm": "^0.23.1",
-    "Base64": "^1.0.1"
+    "puppeteer": "^1.0.0"
   },
   "devDependencies": {
     "http-server": "^0.11.1",
@@ -30,7 +31,7 @@
   },
   "name": "puppeteer-service",
   "description": "Run headless Chrome (aka Puppeteer) as a service, for web crawling, remote controlling and so on.",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "main": "src/index.js",
   "directories": {
     "test": "test"

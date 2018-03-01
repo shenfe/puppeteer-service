@@ -14,6 +14,8 @@ const config = require('./config');
 const privates = require('./config/privates');
 
 const path = require('path');
+const ip = require('ip');
+const ipAddr = ip.address();
 
 const gracefulShutdown = require('http-graceful-shutdown');
 
@@ -36,7 +38,7 @@ module.exports = async function (options = {}) {
         });
         router.get('/src/config/server.mjs', ctx => {
             ctx.type = 'application/javascript';
-            ctx.body = `export default { port: ${port}, apiName: '${apiName}' }`;
+            ctx.body = `export default { host: '${ipAddr}', port: ${port}, apiName: '${apiName}' }`;
         });
         ['/src/request.mjs', '/src/stringify.mjs'].forEach(p => {
             router.get(p, (ctx, next) => {

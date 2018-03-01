@@ -35,7 +35,7 @@
         var $output = $('#output')[0];
         var $send = $('#send')[0];
         var $api = $('#api')[0];
-        $api.value = `//127.0.0.1:${ServerConf.port}/${ServerConf.apiName}`;
+        $api.value = `http://${ServerConf.host || '127.0.0.1'}:${ServerConf.port}/${ServerConf.apiName}`;
         $send.addEventListener('click', function () {
             Run($api.value, eval('(' + $input.value + ')'))
                 .then(data => {
