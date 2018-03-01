@@ -22,6 +22,8 @@ const { koaApp, server } = PuppeteerService({
     test: true, // default: false
     puppeteer: {
         // See https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions
+        headless: true,
+        args: ['--no-sandbox']
     }
 });
 ```
@@ -38,7 +40,7 @@ Use the submodule named `request` to communicate with the server. It's runnable 
 const Run = require('puppeteer-service/request.mjs');
 Run('http://your.host:3000/run', {
     /* Entry page url */
-    url: 'https://www.sogou.com',
+    url: 'https://target.com/',
 
     /* Runner function */
     run: async page => {
@@ -75,6 +77,12 @@ By the way, if you want to use ES modules (such as `puppeteer-service/request.mj
 As the following does:
 
 ```js
+const pageRunner = async page => {
+    const title = await page.title();
+    return {
+        info: b(a, title)
+    };
+};
 fetch('http://your.host:3000/run', {
     method: 'POST',
     /*...*/
@@ -84,12 +92,7 @@ fetch('http://your.host:3000/run', {
     body: JSON.stringify({
         data: `{
             url: 'https://www.sogou.com',
-            run: async page => {
-                const title = await page.title();
-                return {
-                    info: b(a, title)
-                };
-            },
+            run: ${pageRunner},
             options: {
                 injection: {
                     a: 'Welcome to ',
