@@ -22,7 +22,7 @@ const { koaApp, server } = PuppeteerService({
     test: true, // default: false
     puppeteer: {
         // See https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions
-        headless: true,
+        headless: true, // default
         args: ['--no-sandbox']
     }
 });
