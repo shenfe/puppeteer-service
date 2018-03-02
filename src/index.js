@@ -45,7 +45,11 @@ module.exports = async function (options = {}) {
         });
         router.get('/puppeteer-service-client.js', (ctx, next) => {
             ctx.type = 'application/javascript';
-            ctx.body = createReadStream(require.resolve('puppeteer-service-client'));
+            const pscSrc = require.resolve('puppeteer-service-client');
+            const pscDist = pscSrc.replace(/(puppeteer-service-client\/)(.*)$/g, function (...args) {
+                return args[1] + 'dist/puppeteer-service-client.js';
+            });
+            ctx.body = createReadStream(pscDist);
         });
     }
 
