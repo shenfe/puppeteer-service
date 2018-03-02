@@ -5,10 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>test</title>
+    <style>
+        #input-wrapper {
+            display: flex;
+            height: 400px;
+        }
+        #input {
+            flex: 1;
+            box-sizing: border-box;
+            min-height: 100%;
+            max-height: 100%;
+            outline: none;
+        }
+        #output-wrapper {
+            flex: 1;
+            border: 1px #999 solid;
+            overflow: auto;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <div style="display: flex; height: 200px;">
-        <textarea id="input" style="flex: 1; box-sizing: border-box; min-height: 100%; max-height: 100%; outline: none;">{
+    <div id="input-wrapper">
+        <textarea id="input"></textarea>
+        <div id="output-wrapper">
+            <pre id="output"></pre>
+        </div>
+    </div>
+    <div id="control">
+        <button id="send">send</button><input id="api" type="text">
+    </div>
+    <script type="module">
+        import Run from '../src/request.mjs';
+        import ServerConf from '../src/config/server.mjs';
+
+        const $ = function (sel = '') {
+            return document.querySelectorAll(sel);
+        };
+        const $input = $('#input')[0];
+        const $output = $('#output')[0];
+        const $send = $('#send')[0];
+        const $api = $('#api')[0];
+        $input.value = `{
     url: 'https://www.sogou.com/',
     run: async page => {
         const title = await page.title();
@@ -16,26 +54,10 @@
             title: title
         };
     }
-}</textarea>
-        <div style="flex: 1; border: 1px #999 solid; overflow: auto;">
-            <pre id="output"></pre>
-        </div>
-    </div>
-    <div id="control">
-        <button id="send">send</button><input id="api" type="text" value="">
-    </div>
-    <script type="module">
-        import Run from '../src/request.mjs';
-        import ServerConf from '../src/config/server.mjs';
+}`;
+        const serverHost = `http://${ServerConf.host || '127.0.0.1'}:${ServerConf.port}`;
+        $api.value = `${serverHost}/${ServerConf.apiName}`;
 
-        var $ = function (sel = '') {
-            return document.querySelectorAll(sel);
-        };
-        var $input = $('#input')[0];
-        var $output = $('#output')[0];
-        var $send = $('#send')[0];
-        var $api = $('#api')[0];
-        $api.value = `http://${ServerConf.host || '127.0.0.1'}:${ServerConf.port}/${ServerConf.apiName}`;
         $send.addEventListener('click', function () {
             Run($api.value, eval('(' + $input.value + ')'))
                 .then(data => {
@@ -43,6 +65,12 @@
                 }).catch(err => {
                     console.error('Request error: ', err.message);
                 });
+        });
+
+        const socket = io.connect(serverHost);
+        socket.on('server:greet', function (data) {
+            console.log('from server:greet', data);
+            socket.emit('client:some-event', { my: 'data' });
         });
     </script>
 </body>

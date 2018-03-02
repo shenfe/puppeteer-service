@@ -3,6 +3,8 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
 
+const sockio = require('socket.io');
+
 const { createReadStream } = require('fs');
 
 const fnsb = require('function-sandbox');
@@ -24,14 +26,15 @@ module.exports = async function (options = {}) {
     const port = options.port || config.server.port;
     const apiName = options.api || config.server.apiName;
 
-    await Ppt.open(options.puppeteer);
-    console.log('Chrome puppeteer open');
+    Open_puppeteer: {
+        await Ppt.open(options.puppeteer);
+        console.log('Chrome puppeteer open');
+    }
 
     const app = new Koa();
     const router = new Router();
 
-    /* Serve static files for the test page */
-    if (test) {
+    if (test) { /* Serve static files for the test page */
         router.get('/test/', (ctx, next) => {
             ctx.type = 'html';
             ctx.body = createReadStream(path.resolve(__dirname, '../src/index.html'));
@@ -97,6 +100,17 @@ module.exports = async function (options = {}) {
         await next();
     });
 
+    Serve_socketio_client_js: {
+        const sockioClientModuleIndex = require.resolve('socket.io-client');
+        const sockioClientModuleDist = sockioClientModuleIndex.replace(/(socket\.io-client)(.*)$/, function (...args) {
+            return args[1];
+        });
+        router.get('/socket.io/socket.io.js', ctx => {
+            ctx.type = 'application/javascript';
+            ctx.body = createReadStream(path.resolve(sockioClientModuleDist, './dist/socket.io.js'));
+        });
+    }
+
     app
         .use(cors({
             // origin: '*',
@@ -109,6 +123,17 @@ module.exports = async function (options = {}) {
 
     const server = app.listen(+port);
     console.log('Listening port ' + port);
+
+    Set_up_websocket: {
+        const io = sockio(server);
+        io.on('connection', function (socket) {
+            socket.emit('server:greet', { hello: 'world' });
+            socket.on('client:some-event', function (data) {
+                console.log('from client:some-event', data);
+            });
+        });
+    }
+
     gracefulShutdown(server, {
         onShutdown: () => {
             console.log('Closing...');
