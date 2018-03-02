@@ -23,7 +23,7 @@
             overflow: auto;
         }
     </style>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/puppeteer-service-client.js"></script>
 </head>
 <body>
     <div id="input-wrapper">
@@ -36,8 +36,7 @@
         <button id="send">send</button><input id="api" type="text">
     </div>
     <script type="module">
-        import Run from '../src/request.mjs';
-        import ServerConf from '../src/config/server.mjs';
+        import ServerConf from '/server.config.js';
 
         const $ = function (sel = '') {
             return document.querySelectorAll(sel);
@@ -59,18 +58,14 @@
         $api.value = `${serverHost}/${ServerConf.apiName}`;
 
         $send.addEventListener('click', function () {
-            Run($api.value, eval('(' + $input.value + ')'))
+            PSC($api.value, eval('(' + $input.value + ')'), {
+                /**/
+            })
                 .then(data => {
                     $output.innerHTML = JSON.stringify(data, null, 4);
                 }).catch(err => {
                     console.error('Request error: ', err.message);
                 });
-        });
-
-        const socket = io.connect(serverHost);
-        socket.on('server:greet', function (data) {
-            console.log('from server:greet', data);
-            socket.emit('client:some-event', { my: 'data' });
         });
     </script>
 </body>

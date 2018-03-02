@@ -6,8 +6,6 @@
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
-    "@std/esm": "^0.23.1",
-    "Base64": "^1.0.1",
     "function-sandbox": "^1.1.2",
     "http-graceful-shutdown": "^2.1.0",
     "ip": "^1.1.5",
@@ -20,6 +18,7 @@
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
+    "Base64": "^1.0.1",
     "http-server": "^0.11.1",
     "open": "0.0.5",
     "babel-core": "^6.26.0",

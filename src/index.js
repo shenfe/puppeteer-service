@@ -37,17 +37,15 @@ module.exports = async function (options = {}) {
     if (test) { /* Serve static files for the test page */
         router.get('/test/', (ctx, next) => {
             ctx.type = 'html';
-            ctx.body = createReadStream(path.resolve(__dirname, '../src/index.html'));
+            ctx.body = createReadStream(path.resolve(__dirname, './index.html'));
         });
-        router.get('/src/config/server.mjs', ctx => {
+        router.get('/server.config.js', ctx => {
             ctx.type = 'application/javascript';
             ctx.body = `export default { host: '${ipAddr}', port: ${port}, apiName: '${apiName}' }`;
         });
-        ['/src/request.mjs', '/src/stringify.mjs'].forEach(p => {
-            router.get(p, (ctx, next) => {
-                ctx.type = 'application/javascript';
-                ctx.body = createReadStream(path.resolve(__dirname, `..${p}`));
-            });
+        router.get('/puppeteer-service-client.js', (ctx, next) => {
+            ctx.type = 'application/javascript';
+            ctx.body = createReadStream(require.resolve('puppeteer-service-client'));
         });
     }
 
@@ -100,16 +98,16 @@ module.exports = async function (options = {}) {
         await next();
     });
 
-    Serve_socketio_client_js: {
-        const sockioClientModuleIndex = require.resolve('socket.io-client');
-        const sockioClientModuleDist = sockioClientModuleIndex.replace(/(socket\.io-client)(.*)$/, function (...args) {
-            return args[1];
-        });
-        router.get('/socket.io/socket.io.js', ctx => {
-            ctx.type = 'application/javascript';
-            ctx.body = createReadStream(path.resolve(sockioClientModuleDist, './dist/socket.io.js'));
-        });
-    }
+    // Serve_socketio_client_js: {
+    //     const sockioClientModuleIndex = require.resolve('socket.io-client');
+    //     const sockioClientModuleDist = sockioClientModuleIndex.replace(/(socket\.io-client)(.*)$/, function (...args) {
+    //         return args[1];
+    //     });
+    //     router.get('/socket.io/socket.io.js', ctx => {
+    //         ctx.type = 'application/javascript';
+    //         ctx.body = createReadStream(path.resolve(sockioClientModuleDist, './dist/socket.io.js'));
+    //     });
+    // }
 
     app
         .use(cors({

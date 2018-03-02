@@ -1,9 +1,8 @@
-require = require('@std/esm')(module);
-
-const serverConf = require('./server.mjs').default;
-
 module.exports = {
-    server: serverConf,
+    server: {
+        port: 3000,
+        apiName: 'run'
+    },
     launch: {
         headless: true
     }

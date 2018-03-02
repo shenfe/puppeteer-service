@@ -1,8 +1,4 @@
-require = require('@std/esm')(module, {
-    cjs: true
-});
-
-const Run = require('../../src/request.mjs').default;
+const Run = require('puppeteer-service-client');
 
 const account = require('./account');
 
