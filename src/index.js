@@ -46,10 +46,10 @@ module.exports = async function (options = {}) {
         router.get('/puppeteer-service-client.js', (ctx, next) => {
             ctx.type = 'application/javascript';
             const pscSrc = require.resolve('puppeteer-service-client');
-            const pscDist = pscSrc.replace(/(puppeteer-service-client\/)(.*)$/g, function (...args) {
-                return args[1] + 'dist/puppeteer-service-client.js';
+            const pscDist = pscSrc.replace(/(puppeteer-service-client)(.*)$/g, function (...args) {
+                return args[1];
             });
-            ctx.body = createReadStream(pscDist);
+            ctx.body = createReadStream(path.resolve(pscDist, 'dist/puppeteer-service-client.js'));
         });
     }
 
@@ -129,9 +129,9 @@ module.exports = async function (options = {}) {
     Set_up_websocket: {
         const io = sockio(server);
         io.on('connection', function (socket) {
-            socket.emit('server:greet', { hello: 'world' });
+            socket.emit('server:echo', { hello: 'world' });
             socket.on('client:some-event', function (data) {
-                console.log('from client:some-event', data);
+                console.log('client:some-event', data);
             });
         });
     }

@@ -15,7 +15,7 @@
     "koa-session": "^5.5.0",
     "node-fetch": "^2.0.0",
     "puppeteer": "^1.0.0",
-    "puppeteer-service-client": "^0.1.1",
+    "puppeteer-service-client": "^0.1.4",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {

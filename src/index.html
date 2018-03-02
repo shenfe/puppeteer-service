@@ -59,7 +59,9 @@
 
         $send.addEventListener('click', function () {
             PSC($api.value, eval('(' + $input.value + ')'), {
-                /**/
+                socket: data => {
+                    console.log('socket', data);
+                }
             })
                 .then(data => {
                     $output.innerHTML = JSON.stringify(data, null, 4);
