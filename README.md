@@ -4,15 +4,13 @@
 
 Run [GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) as a service.
 
-## Installation
+## Basic Usage
+
+### Server
 
 ```bash
 $ npm install puppeteer-service --save
 ```
-
-## Basic Usage
-
-### Server
 
 ```js
 const PuppeteerService = require('puppeteer-service');
@@ -34,10 +32,14 @@ If the `test` option is set `true` like above, you can visit the test page via `
 
 #### Option 1: Use the Submodule
 
-Use the submodule named `request` to communicate with the server. It's runnable at **both browser and Node.js**.
+```bash
+$ npm install puppeteer-service-client --save
+```
+
+Use [puppeteer-service-client](https://github.com/shenfe/puppeteer-service-client) to communicate with the server. It's runnable at **both browser and Node.js**.
 
 ```js
-const Run = require('puppeteer-service/request.mjs');
+const Run = require('puppeteer-service-client');
 Run('http://your.host:3000/run', {
     /* Entry page url */
     url: 'https://target.com/',
@@ -50,7 +52,7 @@ Run('http://your.host:3000/run', {
         };
     },
 
-    /* Options */
+    /* Options (Optional) */
     options: {
         /* Variables to inject */
         /* Identifiers and their corresponding literal values will be injected 
@@ -61,6 +63,11 @@ Run('http://your.host:3000/run', {
                 return x + y;
             }
         }
+    },
+
+    /* Websocket data handler (Optional) */
+    socket: data => {
+        /**/
     }
 })
     .then(data => {
@@ -70,9 +77,7 @@ Run('http://your.host:3000/run', {
     });
 ```
 
-By the way, if you want to use ES modules (such as `puppeteer-service/request.mjs`) in Node.js, [@std/esm](https://www.npmjs.com/package/@std/esm) maybe a good choice.
-
-#### Option 2: Send an HTTP Request Directly
+#### Option 2: Send a Request Directly
 
 As the following does:
 
