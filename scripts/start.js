@@ -17,7 +17,7 @@ const index = require('../src');
         ...(port && { port }),
         puppeteer: {
             headless: false,
-            executablePath: 'D:\\programs\\shenfe\\spiderman\\node_modules\\puppeteer\\.local-chromium\\win64-526987\\chrome-win32\\chrome.exe'
+            // executablePath: 'D:\\programs\\shenfe\\spiderman\\node_modules\\puppeteer\\.local-chromium\\win64-526987\\chrome-win32\\chrome.exe'
         }
     });
     // do stuff

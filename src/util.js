@@ -2,11 +2,13 @@ const vm = require('vm');
 
 const fnsb = require('function-sandbox');
 
-const evaluate = str => {
-    const safeFn = fnsb(new Function(`return (${str})`));
+const evaluate = (str, injection = {}) => {
+    const safeFn = fnsb(new Function(`return (${str})`), {
+        whiteList: Object.keys(injection)
+    });
     const returnVarName = 'result';
     const script = new vm.Script(`${returnVarName} = (${safeFn})()`);
-    const sandbox = {};
+    const sandbox = { ...injection };
     script.runInNewContext(sandbox);
     return sandbox[returnVarName];
 };

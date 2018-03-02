@@ -30,7 +30,7 @@ If the `test` option is set `true` like above, you can visit the test page via `
 
 ### Client
 
-#### Option 1: Use the Submodule
+#### Option 1: Use puppeteer-service-client
 
 ```bash
 $ npm install puppeteer-service-client --save

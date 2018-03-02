@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer');
 
 const { launch } = require('./config');
 
+const { evaluate } = require('./util');
+
 let browser;
 let status = 0;
 
@@ -26,12 +28,12 @@ const close = () => {
     });
 };
 
-const run = async (url, fn) => {
+const run = async (url, fn, injection = {}) => {
     let page, result;
     try {
         page = await browser.newPage();
         await page.goto(url);
-        result = await fn(page);
+        result = await evaluate(`(${fn})(page)`, { page, echo: injection.echo });
     } catch (e) {
         console.error(e);
         result = {};

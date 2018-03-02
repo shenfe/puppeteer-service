@@ -48,6 +48,7 @@
         $input.value = `{
     url: 'https://www.sogou.com/',
     run: async page => {
+        echo('hey ' + page.url());
         const title = await page.title();
         return {
             title: title

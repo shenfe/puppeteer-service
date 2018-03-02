@@ -21,6 +21,8 @@ const ipAddr = ip.address();
 
 const gracefulShutdown = require('http-graceful-shutdown');
 
+const SessionMap = require('./table');
+
 module.exports = async function (options = {}) {
     const test = !!options.test;
     const port = options.port || config.server.port;
@@ -56,15 +58,27 @@ module.exports = async function (options = {}) {
     router.post(`/${apiName}`, async function (ctx) {
         ctx.response.header['Access-Control-Allow-Origin'] = ctx.request.origin;
         ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
-        // console.log('request.body', ctx.request.body);
-        // console.log('response.header', ctx.response.header);
-        let data = ObjectParse(ctx.request.body.data);
+        const { sessId, sockId } = ctx.request.body;
+        const data = ObjectParse(ctx.request.body.data);
         console.log('data', data);
         ctx.status = 200;
+
+        const injection = {
+            echo: function (data) {
+                const skt = socksesses.get(sessId);
+                if (!skt) return;
+                skt.emit('server:echo', data);
+            }
+        };
+
+        if (!data.options) data.options = {};
+        if (!data.options.whiteList) data.options.whiteList = [];
+        data.options.whiteList = data.options.whiteList.concat(Object.keys(injection));
+
         ctx.body = await Ppt.run(data.url, fnsb(data.run, {
             ...data.options,
             asFunction: true
-        }));
+        }), injection);
     });
 
     router.post(`/puppeteer`, async function (ctx, next) {
@@ -126,12 +140,18 @@ module.exports = async function (options = {}) {
     const server = app.listen(+port);
     console.log('Listening port ' + port);
 
+    const socksesses = new SessionMap();
     Set_up_websocket: {
         const io = sockio(server);
-        io.on('connection', function (socket) {
+        io.on('connect', function (socket) {
+            const sid = socket.handshake.query.sessId;
+            socksesses.put(sid, socket);
             socket.emit('server:echo', { hello: 'world' });
             socket.on('client:some-event', function (data) {
                 console.log('client:some-event', data);
+            });
+            socket.on('disconnect', reason => {
+                socksesses.del(sid);
             });
         });
     }
