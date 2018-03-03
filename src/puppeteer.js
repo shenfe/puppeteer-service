@@ -39,7 +39,7 @@ const run = async (url, fn, injection = {}) => {
         result = {};
     }
     page.close();
-    return result;
+    return result || {};
 };
 
 module.exports = {
