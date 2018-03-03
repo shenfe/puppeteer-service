@@ -8,6 +8,7 @@ const args = process.argv.slice(2);
 args.forEach(function (val, index, array) {
     switch (val) {
     case '-p':
+    case '--port':
         port = +args[index + 1];
         break;
     }

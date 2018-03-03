@@ -4,7 +4,7 @@
 
 Run [GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) as a service.
 
-## Basic Usage
+## Usage
 
 ### Server
 
@@ -120,6 +120,8 @@ fetch('http://your.host:3000/run', {
     });
 ```
 
+This way is lightweight but too simple to communicate with the server via websocket.
+
 ## Development
 
 Some commands:
@@ -127,14 +129,17 @@ Some commands:
 ```bash
 # Start
 npm start
-npm start -- -p 3000 # specifying port 3000
-node ./scripts/start.js -p 3000 # the same with above
 npm run debug # debugging mode
 
 # Stop
 npm stop
-npm stop -- -p 3000 # specifying port 3000
-node ./scripts/stop.js -p 3000 # the same with above
+
+# Restart
+npm restart
+
+# Specify the port number
+npm start -- --port 3000
+npm stop -- -p 3000 # for short
 ```
 
 ## License

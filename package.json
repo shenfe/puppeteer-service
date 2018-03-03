@@ -2,6 +2,7 @@
   "scripts": {
     "start": "node ./scripts/start.js",
     "stop": "node ./scripts/stop.js",
+    "restart": "node ./scripts/restart.js",
     "debug": "node --inspect ./scripts/start.js"
   },
   "dependencies": {
@@ -32,7 +33,7 @@
   },
   "name": "puppeteer-service",
   "description": "Run headless Chrome (aka Puppeteer) as a service, for web crawling, remote controlling and so on.",
-  "version": "0.3.9",
+  "version": "0.4.0",
   "main": "src/index.js",
   "directories": {
     "test": "test"
