@@ -47,6 +47,7 @@ Run('http://your.host:3000/run', {
     /* Runner function */
     run: async page => {
         const title = await page.title();
+        echo({ url: page.url(), title });
         return {
             info: b(a, title)
         };
@@ -76,6 +77,10 @@ Run('http://your.host:3000/run', {
         /**/
     });
 ```
+
+**socket and echo**
+
+The `socket` option specifies a handler for websocket data at client side. Correspondingly, the function `echo`, which is callable inside the "page runner function", is a built-in function whose responsibility is to transfer data to the right socket connection with the client.
 
 #### Option 2: Send a Request Directly
 
