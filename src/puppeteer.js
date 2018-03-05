@@ -42,9 +42,16 @@ const run = async (url, fn, injection = {}) => {
     return result || {};
 };
 
+const pageCount = async () => {
+    if (!browser) return -1;
+    let pages = await browser.pages();
+    return pages.length;
+};
+
 module.exports = {
     open,
     close,
     run,
-    process: () => browser && browser.process()
+    process: () => browser && browser.process(),
+    pageCount
 };
