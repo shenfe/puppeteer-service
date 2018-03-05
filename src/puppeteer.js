@@ -42,11 +42,9 @@ const run = async (url, fn, injection = {}) => {
     return result || {};
 };
 
-const process = () => browser && browser.process();
-
 module.exports = {
     open,
     close,
     run,
-    process
+    process: () => browser && browser.process()
 };
