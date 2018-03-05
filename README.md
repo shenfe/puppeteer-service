@@ -82,7 +82,7 @@ Run('http://your.host:3000/run', {
 
 The `socket` option specifies a handler for WebSocket data at client side. Correspondingly, the function `echo`, which is callable inside the "page runner function", is a built-in function whose responsibility is to transfer data to the right socket connection with the client.
 
-#### 👉 Option 2: Send a Request Directly
+#### 👉 Option 2: Send a request directly
 
 As the following does:
 
