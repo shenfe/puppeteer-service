@@ -146,7 +146,7 @@ module.exports = async function (options = {}) {
         io.on('connect', function (socket) {
             const sid = socket.handshake.query.sessId;
             socksesses.put(sid, socket);
-            socket.emit('server:echo', { hello: 'world' });
+            socket.emit('server:greet', { hello: sid });
             socket.on('client:some-event', function (data) {
                 console.log('client:some-event', data);
             });
