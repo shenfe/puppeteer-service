@@ -75,10 +75,17 @@ module.exports = async function (options = {}) {
         if (!data.options.whiteList) data.options.whiteList = [];
         data.options.whiteList = data.options.whiteList.concat(Object.keys(injection));
 
+        console.log(ctx.request.url, ' begin'); // test
+
         ctx.body = await Ppt.run(data.url, fnsb(data.run, {
             ...data.options,
             asFunction: true
         }), injection);
+
+        console.log(ctx.request.url, ' end'); // test
+
+        const skt = socksesses.get(sessId);
+        skt && skt.emit('server:close', 'done');
     });
 
     router.post(`/puppeteer`, async function (ctx, next) {
