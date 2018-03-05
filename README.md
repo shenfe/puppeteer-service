@@ -26,11 +26,11 @@ const { koaApp, server } = PuppeteerService({
 });
 ```
 
-If the `test` option is set `true` like above, you can visit the test page via `http://your.host:3000/test/`.
+😯 If the `test` option is set `true` like above, you can visit the test page via `http://your.host:3000/test/`.
 
 ### Client
 
-#### Option 1: Use puppeteer-service-client
+#### 👉 Option 1: Use puppeteer-service-client
 
 ```bash
 $ npm install puppeteer-service-client --save
@@ -82,7 +82,7 @@ Run('http://your.host:3000/run', {
 
 The `socket` option specifies a handler for WebSocket data at client side. Correspondingly, the function `echo`, which is callable inside the "page runner function", is a built-in function whose responsibility is to transfer data to the right socket connection with the client.
 
-#### Option 2: Send a Request Directly
+#### 👉 Option 2: Send a Request Directly
 
 As the following does:
 
@@ -125,7 +125,7 @@ fetch('http://your.host:3000/run', {
     });
 ```
 
-This way is lightweight but too simple to communicate with the server via WebSocket.
+⚠️ This way is lightweight but too simple to communicate with the server via WebSocket.
 
 ## Development
 
