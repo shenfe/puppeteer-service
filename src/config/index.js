@@ -4,6 +4,7 @@ module.exports = {
         apiName: 'run'
     },
     launch: {
-        headless: true
+        headless: true,
+        args: ['--no-sandbox']
     }
 };
