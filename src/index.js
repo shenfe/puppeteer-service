@@ -85,7 +85,7 @@ module.exports = async function (options = {}) {
         console.log(ctx.request.url, ' end'); // test
 
         const skt = socksesses.get(sessId);
-        skt && skt.emit('server:close', 'done');
+        skt && skt.emit('server:close', 'done') && skt.disconnect();
     });
 
     router.post(`/puppeteer`, async function (ctx, next) {
