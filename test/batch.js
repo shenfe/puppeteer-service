@@ -9,9 +9,11 @@ const batchPromises = [];
 console.time('time consumed: ');
 
 for (let i = 0; i < 100; i++) {
+    console.time(`time ${i} consumed: `);
     let p = Run(`http://127.0.0.1:${port}/${apiName}?q=${i}`, {
         url: 'https://www.sogou.com/',
         run: async page => {
+            console.log('page ready');
             echo(`${i} hey ` + page.url());
             const title = await page.title();
             return {
@@ -28,12 +30,14 @@ for (let i = 0; i < 100; i++) {
             }
         }
     })
-        .then(data => console.log(JSON.stringify(data)))
+        .then(data => {
+            console.timeEnd(`time ${i} consumed: `);
+            // console.log(JSON.stringify(data));
+        })
         .catch(err => console.error(err));
     batchPromises.push(p);
 }
 
 Promise.all(batchPromises).then(() => {
-    const diff = process.hrtime(time);
     console.timeEnd('time consumed: ');
 });

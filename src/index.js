@@ -19,11 +19,11 @@ const path = require('path');
 const ip = require('ip');
 const ipAddr = ip.address();
 
-const gracefulShutdown = require('http-graceful-shutdown');
-
 const SessionMap = require('./table');
 
 module.exports = async function (options = {}) {
+    const gracefulShutdown = require('http-graceful-shutdown');
+
     const test = !!options.test;
     const port = options.port || config.server.port;
     const apiName = options.api || config.server.apiName;
