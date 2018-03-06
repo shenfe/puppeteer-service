@@ -1,16 +1,34 @@
+let batchNumber = 100;
+let apiUrl;
+const args = process.argv.slice(2);
+args.forEach(function (val, index, array) {
+    switch (val) {
+    case '-u':
+    case '--url':
+        apiUrl = args[index + 1];
+        break;
+    case '-n':
+    case '--number':
+        batchNumber = +args[index + 1];
+    }
+});
+
 const Run = require('puppeteer-service-client');
 
 const { wait } = require('../src/util');
 
 const { port, apiName } = require('../src/config').server;
+if (!apiUrl) {
+    apiUrl = `http://127.0.0.1:${port}/${apiName}`;
+}
 
 const batchPromises = [];
 
 console.time('time consumed: ');
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < batchNumber; i++) {
     console.time(`time ${i} consumed: `);
-    let p = Run(`http://127.0.0.1:${port}/${apiName}?q=${i}`, {
+    let p = Run(`${apiUrl}?q=${i}`, {
         url: 'https://www.sogou.com/',
         run: async page => {
             console.log('page ready');
