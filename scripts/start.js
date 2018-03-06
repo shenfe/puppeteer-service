@@ -29,10 +29,9 @@ const run = () => index({
     // do stuff
 });
 
-const clusterRunner = require('../src/cluster');
-
-if (!useCluster) {
-    run();
+if (useCluster) {
+    // require('../src/cluster')(run);
+    console.log('使用Node的cluster模块会导致session混乱问题。如果想要使用集群，请用不同端口启动多个puppeteer-service，再在更上层根据ip-hash实现分发。');
 } else {
-    clusterRunner(run);
+    run();
 }

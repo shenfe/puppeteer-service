@@ -17,7 +17,7 @@
     "koa-session": "^5.5.0",
     "node-fetch": "^2.0.0",
     "puppeteer": "^1.0.0",
-    "puppeteer-service-client": "^0.1.5",
+    "puppeteer-service-client": "^0.1.6",
     "socket.io": "^2.0.4",
     "sticky-session": "^1.1.2"
   },
@@ -35,7 +35,7 @@
   },
   "name": "puppeteer-service",
   "description": "Run headless Chrome (aka Puppeteer) as a service, for web crawling, remote controlling and so on.",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "main": "src/index.js",
   "directories": {
     "test": "test"

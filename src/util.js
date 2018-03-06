@@ -30,6 +30,36 @@ const walk = (obj, fn) => {
     }
 };
 
+/**
+ * IP Hash
+ * https://github.com/indutny/sticky-session/blob/master/lib/sticky/master.js
+ */
+const ipHash = (function () {
+    const seed = (Math.random() * 0xffffffff) | 0;
+
+    return ip => {
+        let hash = seed;
+
+        for (let i = 0; i < ip.length; i++) {
+            const num = ip[i];
+
+            hash += num;
+            hash %= 2147483648;
+            hash += hash << 10;
+            hash %= 2147483648;
+            hash ^= hash >> 6;
+        }
+
+        hash += hash << 3;
+        hash %= 2147483648;
+        hash ^= hash >> 11;
+        hash += hash << 15;
+        hash %= 2147483648;
+
+        return hash >>> 0;
+    };
+})();
+
 const wait = d => {
     return new Promise(resolve => setTimeout(_ => resolve(1), d));
 };
@@ -37,5 +67,6 @@ const wait = d => {
 module.exports = {
     evaluate,
     walk,
-    wait
+    wait,
+    ipHash
 };
