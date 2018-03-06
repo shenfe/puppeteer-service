@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 
+console.log(puppeteer.defaultArgs());
+
 const { launch } = require('./config');
 
 const { evaluate } = require('./util');

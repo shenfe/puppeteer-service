@@ -6,6 +6,9 @@ module.exports = {
     launch: {
         ignoreHTTPSErrors: true,
         headless: true,
-        args: ['--no-sandbox']
+        args: [
+            '--no-sandbox',
+            '--memory-pressure-thresholds=1'
+        ]
     }
 };
