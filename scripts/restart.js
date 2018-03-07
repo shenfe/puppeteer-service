@@ -1,2 +1,4 @@
-require('./stop');
-require('./start');
+(async () => {
+    await require('./stop');
+    require('./start');
+})();
