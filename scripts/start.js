@@ -18,7 +18,8 @@ args.forEach(function (val, index, array) {
 
 const index = require('../src');
 
-const run = () => index({
+const run = (ifUseCluster) => index({
+    cluster: ifUseCluster,
     test: true,
     ...(port && { port }),
     puppeteer: {
@@ -32,8 +33,8 @@ const run = () => index({
 console.log('Starting...');
 
 if (useCluster) {
-    // require('../src/cluster')(run);
-    console.log('使用Node的cluster模块会导致session混乱问题。如果想要使用集群，请用不同端口启动多个puppeteer-service，再在更上层根据ip-hash实现分发。');
+    // console.log('使用Node的cluster模块会导致session混乱问题。如果想要使用集群，请用不同端口启动多个puppeteer-service，再在更上层根据ip-hash实现分发。');
+    run(true);
 } else {
     run();
 }
