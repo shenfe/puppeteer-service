@@ -1,5 +1,6 @@
 const sticky = require('sticky-session');
 const http = require('http');
+const cluster = require('cluster');
 
 const Koa = require('koa');
 const Router = require('koa-router');
@@ -87,6 +88,9 @@ module.exports = async function (options = {}) {
         }), injection);
 
         console.log(ctx.request.url, ' end'); // test
+        if (cluster.isWorker) {
+            console.log('worker', cluster.worker.id); // test
+        }
 
         const skt = socksesses.get(sessId);
         skt && skt.emit('server:close', 'done') && skt.disconnect();
