@@ -24,7 +24,7 @@ const run = (ifUseCluster) => index({
     ...(port && { port }),
     puppeteer: {
         headless: false,
-        // executablePath: '..\\spiderman\\node_modules\\puppeteer\\.local-chromium\\win64-526987\\chrome-win32\\chrome.exe'
+        executablePath: '..\\spiderman\\node_modules\\puppeteer\\.local-chromium\\win64-526987\\chrome-win32\\chrome.exe'
     }
 }).then(({ koaApp, server }) => {
     // do stuff
