@@ -1,4 +1,4 @@
-let batchNumber = 10;
+let batchNumber = 30;
 let apiUrl;
 const args = process.argv.slice(2);
 args.forEach(function (val, index, array) {

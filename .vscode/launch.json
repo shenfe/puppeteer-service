@@ -12,6 +12,12 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "stop",
+      "program": "${workspaceFolder}/scripts/stop.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "test 163",
       "program": "${workspaceFolder}/test/163/test.js"
     },

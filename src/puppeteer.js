@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-console.log(puppeteer.defaultArgs());
+// console.log(puppeteer.defaultArgs());
 
 const { launch } = require('./config');
 
@@ -30,7 +30,7 @@ const close = () => {
     });
 };
 
-const run0 = async (url, fn, injection = {}) => {
+const run = async (url, fn, injection = {}) => {
     let page, result;
     try {
         page = await browser.newPage();
@@ -44,18 +44,18 @@ const run0 = async (url, fn, injection = {}) => {
     return result || {};
 };
 
-const run = async (url, fn, injection = {}) => {
-    return browser.newPage().then(async page => {
-        await page.goto(url);
-        return evaluate(`(${fn})(page)`, { page, echo: injection.echo }).then(data => {
-            page.close();
-            return data;
-        }, () => {
-            page.close();
-            return {};
-        });
-    });
-};
+// const run = async (url, fn, injection = {}) => {
+//     return browser.newPage().then(async page => {
+//         await page.goto(url);
+//         return evaluate(`(${fn})(page)`, { page, echo: injection.echo }).then(data => {
+//             page.close();
+//             return data;
+//         }, () => {
+//             page.close();
+//             return {};
+//         });
+//     });
+// };
 
 const pageCount = async () => {
     if (!browser) return -1;

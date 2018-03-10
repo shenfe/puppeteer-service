@@ -15,6 +15,7 @@ $ npm install puppeteer-service --save
 ```js
 const PuppeteerService = require('puppeteer-service');
 const { koaApp, server } = PuppeteerService({
+    cluster: true, // default: false
     port: 3000, // default
     api: 'run', // default
     test: true, // default: false
@@ -132,19 +133,13 @@ fetch('http://your.host:3000/run', {
 Some commands:
 
 ```bash
-# Start
-npm start
+npm start # start
+npm start -- -p 3000 # port
+npm start -- -c # cluster
 npm run debug # debugging mode
-
-# Stop
-npm stop
-
-# Restart
-npm restart
-
-# Specify the port number
-npm start -- --port 3000
-npm stop -- -p 3000 # for short
+npm test # test
+npm test -- -u http://127.0.0.1:3000/run # api url
+npm test -- -n 10 # batch number
 ```
 
 ## License

@@ -1,3 +1,7 @@
+const sticky = require('sticky-session');
+const http = require('http');
+const cluster = require('cluster');
+
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
@@ -21,9 +25,10 @@ const ipAddr = ip.address();
 
 const SessionMap = require('./table');
 
-module.exports = async function (options = {}) {
-    const gracefulShutdown = require('http-graceful-shutdown');
+const gracefulShutdown = require('http-graceful-shutdown');
 
+module.exports = async function (options = {}) {
+    const useCluster = !!options.cluster;
     const test = !!options.test;
     const port = options.port || config.server.port;
     const apiName = options.api || config.server.apiName;
@@ -60,7 +65,7 @@ module.exports = async function (options = {}) {
         ctx.response.header['Content-Type'] = 'application/json; charset=utf-8';
         const { sessId, sockId } = ctx.request.body;
         const data = ObjectParse(ctx.request.body.data);
-        console.log('data', data);
+        console.log('data', data); // test
         ctx.status = 200;
 
         const injection = {
@@ -83,6 +88,9 @@ module.exports = async function (options = {}) {
         }), injection);
 
         console.log(ctx.request.url, ' end'); // test
+        if (cluster.isWorker) {
+            console.log('worker', cluster.worker.id); // test
+        }
 
         const skt = socksesses.get(sessId);
         skt && skt.emit('server:close', 'done') && skt.disconnect();
@@ -144,8 +152,7 @@ module.exports = async function (options = {}) {
         .use(router.allowedMethods())
     ;
 
-    const server = app.listen(+port);
-    console.log('Listening port ' + port);
+    const server = http.createServer(app.callback());
 
     const socksesses = new SessionMap();
     Set_up_websocket: {
@@ -169,6 +176,21 @@ module.exports = async function (options = {}) {
             return Ppt.close();
         }
     });
+
+    if (useCluster) {
+        if (!sticky.listen(server, +port)) {
+            // Master code
+            server.once('listening', function () {
+                console.log(`Server started on ${port} port`);
+            });
+        } else {
+            // Worker code
+        }
+    } else {
+        server.listen(+port, function () {
+            console.log(`Server started on ${port} port`);
+        });
+    }
 
     return {
         koaApp: app,
