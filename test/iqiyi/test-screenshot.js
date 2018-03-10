@@ -10,7 +10,10 @@ if (readlineSync.question('set the executable path of chromium? [yn]: ') === 'y'
 
 const runner = require('./screenshot');
 
+const open = require('open');
+
 puppeteer.launch(pupConf).then(async browser => {
-    await runner(url, browser);
+    const result = await runner(url, browser);
     await browser.close();
+    open(result.path);
 });

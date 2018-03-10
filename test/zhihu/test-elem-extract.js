@@ -28,7 +28,7 @@ puppeteer.launch(pupConf).then(async browser => {
     }, browser);
     await browser.close();
 
-    const filePath = path.resolve(__dirname, `${Date.now()}.html`);
+    const filePath = path.resolve(__dirname, `outputs/${Date.now()}.html`);
     fs.writeFileSync(filePath, resultHtml, 'utf8');
     open(filePath);
 });

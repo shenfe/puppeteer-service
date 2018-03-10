@@ -27,6 +27,7 @@ module.exports = async ({
     await page.type(`#userId`, username);
     await page.type(`#passwd`, password);
     await page.click('.formbtn_01');
+    await page.click('.formbtn_01');
 
     await page.waitForNavigation();
     await page.click('#email');

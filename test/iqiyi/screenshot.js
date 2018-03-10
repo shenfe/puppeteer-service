@@ -1,5 +1,7 @@
 const { wait } = require('../../src/util');
 
+const path = require('path');
+
 function getScrollbarWidth() {
     let outer = document.createElement('div');
     outer.style.visibility = 'hidden';
@@ -46,7 +48,7 @@ module.exports = async (url, browser) => {
         if (re) break;
     }
 
-    const filepath = `./screenshots/${Date.now()}.png`;
+    const filepath = path.resolve(__dirname, `./screenshots/${Date.now()}.png`);
     await page.screenshot({
         path: filepath,
         fullPage: true
@@ -56,4 +58,6 @@ module.exports = async (url, browser) => {
         path: filepath
     };
     console.log(result);
+
+    return result;
 };
