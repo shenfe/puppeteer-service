@@ -26,10 +26,17 @@ const batchPromises = [];
 
 console.time('time consumed: ');
 
+const testUrls = [
+    'https://www.sogou.com/',
+    'https://www.baidu.com/',
+    'https://www.youdao.com/',
+    'https://www.bing.com/'
+];
+
 for (let i = 0; i < batchNumber; i++) {
     console.time(`time ${i} consumed: `);
     let p = Run(`${apiUrl}?q=${i}`, {
-        url: 'https://www.sogou.com/',
+        url: testUrls[i % testUrls.length],
         run: async page => {
             console.log('page ready');
             echo(`${i} hey ` + page.url());
