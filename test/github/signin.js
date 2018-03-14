@@ -16,4 +16,6 @@ module.exports = async ({ username, password }, browser) => {
     await page.waitForNavigation();
     const result = await page.$eval('ul.mini-repo-list', e => e.innerText);
     console.log(result);
+
+    return page;
 };

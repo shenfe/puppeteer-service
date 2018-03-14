@@ -9,7 +9,9 @@ const changeUsername = (username, salt) => {
 };
 
 const changePassword = (password, salt) => {
-    let s = Math.ceil(Math.random() * 10000) % 10;
+    let s1 = 'abcdefghijklmnopqrstuvwxyz'[Math.ceil(Math.random() * 10000) % 26];
+    let s2 = Math.ceil(Math.random() * 10000) % 10;
+    let s = `${s1}${s2}`;
     return {
         password: (_, s) => ('' + _ + s),
         salt: s
@@ -77,4 +79,13 @@ module.exports = async ({ username, password, email }, browser) => {
             email
         });
     }
+
+    return {
+        page,
+        github: {
+            username,
+            password
+        },
+        email
+    };
 };

@@ -1,6 +1,6 @@
 node_modules
 package-lock.json
 .DS_Store
-accounts.*
+accounts*
 test/iqiyi/screenshots/*.png
 test/zhihu/outputs/*.html
