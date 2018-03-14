@@ -9,6 +9,11 @@ const { evaluate } = require('./util');
 let browser;
 let status = 0;
 
+const usePagePool = true;
+const pagePoolSize = 100;
+const { PageBroker } = require('./scheduler');
+let pageBroker;
+
 const open = async (options = {}) => {
     if (status === 1) return 0;
     browser = await puppeteer.launch({
@@ -16,6 +21,10 @@ const open = async (options = {}) => {
         ...options
     });
     status = 1;
+    pageBroker = PageBroker(browser, {
+        pooling: usePagePool,
+        limit: pagePoolSize
+    });
     return 0;
 };
 
@@ -31,16 +40,21 @@ const close = () => {
 };
 
 const run = async (url, fn, injection = {}) => {
-    let page, result;
+    let page, pageId, result;
     try {
-        page = await browser.newPage();
+        const pageman = await pageBroker.open();
+        page = pageman.page;
+        pageId = pageman.id;
         await page.goto(url);
         result = await evaluate(`(${fn})(page)`, { page, echo: injection.echo });
     } catch (e) {
         console.error(e);
         result = {};
     }
-    page.close();
+    pageBroker.close({
+        page,
+        id: pageId
+    });
     return result || {};
 };
 
