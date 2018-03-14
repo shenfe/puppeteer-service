@@ -20,7 +20,7 @@ module.exports = {
             // '--disable-javascript',
             // '-incognito',
             // '--aggressive-cache-discard',
-            '--aggressive-tab-discard'
+            // '--aggressive-tab-discard',
         ]
     }
 };
