@@ -47,7 +47,7 @@ const readFile = filepath => {
 };
 
 const writeFile = (filepath, obj = {}) => {
-    fs.writeFileSync(filepath, JSON.stringify(obj), 'utf8');
+    fs.writeFileSync(filepath, JSON.stringify(obj, null, 4), 'utf8');
 };
 
 const readAccount = email => {

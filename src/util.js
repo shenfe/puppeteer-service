@@ -60,7 +60,12 @@ const ipHash = (function () {
     };
 })();
 
-const wait = d => {
+const randIn = (low, high) => {
+    return low + (high - low) * Math.random();
+};
+
+const wait = (d, high) => {
+    if (high) d = randIn(d, high);
     return new Promise(resolve => setTimeout(_ => resolve(1), d));
 };
 
@@ -68,5 +73,6 @@ module.exports = {
     evaluate,
     walk,
     wait,
-    ipHash
+    ipHash,
+    randIn
 };
